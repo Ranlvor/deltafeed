@@ -1,6 +1,7 @@
 <?php
-$feedid = 1;
 require_once("database.php");
+function generateFeed($feedid) {
+global $db;
 $feedDetails = $db->getFeedDetails($feedid);
 $feedData = $db->getFeedData($feedid);
 header("Content-Type: application/atom+xml");
@@ -30,3 +31,5 @@ foreach($feedData as $data) {
 }
 ?>
 </feed>
+<?php
+}

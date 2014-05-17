@@ -119,7 +119,18 @@ class DeltafeedDatabase {
     $query->close();
 
     return $returnArray;
-    
+  }
+
+  function feedExists($feedid) {
+    $query = $this->sql->prepare('SELECT COUNT(*) AS count FROM feed WHERE id = :id');
+    $query->bindParam(':id', $feedid, SQLITE3_INTEGER);
+
+    $result = $query->execute();
+    $resultArray = $result->fetchArray(SQLITE3_ASSOC);
+    $result->finalize();
+    $query->close();
+
+    return $resultArray['count'] > 0;
   }
 }
 
