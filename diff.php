@@ -28,3 +28,5 @@ function generateDiff($a, $b) {
 
   return $diff->render($renderer);
 }
+
+generateEntryForFeed(1);

@@ -6,3 +6,5 @@ function loadData($feedid) {
   $data = file_get_contents ($db->getFeedURLByID($feedid));
   $blobid = $db->addRequestToDatabase($feedid, $data);
 }
+
+loadData(1);

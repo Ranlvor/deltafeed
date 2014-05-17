@@ -91,6 +91,36 @@ class DeltafeedDatabase {
     $result->finalize();
     $query->close();
   }
+
+  function getFeedDetails($feedid) {
+    $query = $this->sql->prepare('SELECT * FROM feed WHERE id = :id');
+    $query->bindParam(':id', $feedid, SQLITE3_INTEGER);
+
+    $result = $query->execute();
+    $resultArray = $result->fetchArray(SQLITE3_ASSOC);
+    $result->finalize();
+    $query->close();
+
+    return $resultArray;
+  }
+
+  function getFeedData($feedid) {
+    $query = $this->sql->prepare('SELECT * FROM result
+                                  WHERE feedid = :id
+                                  ORDER BY time DESC
+                                  LIMIT 20');
+    $query->bindParam(':id', $feedid, SQLITE3_INTEGER);
+
+    $result = $query->execute();
+    $returnArray = array();
+    while($resultArray = $result->fetchArray(SQLITE3_ASSOC))
+       $returnArray[] = $resultArray;
+    $result->finalize();
+    $query->close();
+
+    return $returnArray;
+    
+  }
 }
 
 global $db;

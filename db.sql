@@ -2,7 +2,8 @@ PRAGMA foreign_keys=OFF;
 BEGIN TRANSACTION;
 CREATE TABLE "feed" (
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
-    "url" TEXT
+    "url" TEXT,
+    "title" TEXT
 );
 CREATE TABLE "request" (
     "id" INTEGER PRIMARY KEY AUTOINCREMENT,
