@@ -22,4 +22,15 @@ CREATE TABLE "result" (
 );
 CREATE INDEX "resultFeedTime" on result (feedid ASC, time ASC);
 CREATE INDEX "requestFeedTime" on request (feedid ASC, time ASC);
+CREATE UNIQUE INDEX "dataunique" on data (data ASC);
+CREATE VIEW requestHR
+AS
+SELECT    request.id                              AS request,
+             feed.url                             AS url,
+ datetime(request.time, 'unixepoch', 'localtime') AS time,
+             data.data                            AS data
+
+FROM         request
+      LEFT JOIN feed ON request.feedid == feed.id
+      LEFT JOIN data ON request.dataid == data.id;
 COMMIT;
