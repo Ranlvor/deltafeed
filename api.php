@@ -12,7 +12,7 @@ if(isset($_GET['id'])) {
     generateEntryForFeed($feedid);
     generateFeed($feedid);
   } else {
-    echo "Invlid feedid";
+    echo "Invalid feedid";
   }
 
 }
