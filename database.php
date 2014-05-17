@@ -17,7 +17,6 @@ class DeltafeedDatabase {
     $result->finalize();
     $query->close();
 
-    //print_r($resultArray);
     return $resultArray['url'];
   }
 
@@ -42,6 +41,51 @@ class DeltafeedDatabase {
     $query = $this->sql->prepare("INSERT INTO request(feedid, time, dataid) VALUES (:feedid, strftime('%s', 'now'), :dataid)");
     $query->bindParam(':feedid', $feedid, SQLITE3_INTEGER);
     $query->bindParam(':dataid', $blobid, SQLITE3_INTEGER);
+
+    $result = $query->execute();
+    $result->finalize();
+    $query->close();
+  }
+
+  function getTwoNewestEntrys($feedid) {
+    $query = $this->sql->prepare('SELECT data.data AS data
+
+                                  FROM          request
+                                      LEFT JOIN data ON request.dataid == data.id
+
+                                  WHERE feedid = 1
+
+                                  ORDER BY request.time DESC
+                                  LIMIT 2');
+
+    $query->bindParam(':feedid', $feedid, SQLITE3_INTEGER);
+
+    $resultArray = array();
+    $result = $query->execute();
+    $resultArray[] = $result->fetchArray(SQLITE3_ASSOC);
+    $resultArray[] = $result->fetchArray(SQLITE3_ASSOC);
+    $result->finalize();
+    $query->close();
+
+    $returnArray = array();
+
+    if(isset($resultArray[0]['data']))
+      $returnArray[] = $resultArray[0]['data'];
+    else
+      $returnArray[] = '';
+
+    if(isset($resultArray[1]['data']))
+      $returnArray[] = $resultArray[1]['data'];
+    else
+      $returnArray[] = '';
+
+    return $returnArray;
+  }
+
+  function saveDiff($feedid, $data) {
+    $query = $this->sql->prepare("INSERT INTO result(feedid, time, delta) VALUES (:feedid, strftime('%s', 'now'), :data)");
+    $query->bindParam(':feedid', $feedid, SQLITE3_INTEGER);
+    $query->bindParam(':data', $data, SQLITE3_BLOB);
 
     $result = $query->execute();
     $result->finalize();
