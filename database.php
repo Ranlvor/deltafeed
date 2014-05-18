@@ -2,9 +2,14 @@
 class DeltafeedDatabase {
   private $sql;
 
-  function DeltafeedDatabase() {
+  function __construct() {
     $this->sql = new SQLite3('db.sqlite');
     $this->sql->busyTimeout(60000);
+    $this->sql->exec('BEGIN');
+  }
+
+  function __destruct() {
+    $this->sql->exec('COMMIT');
   }
 
 
