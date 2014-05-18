@@ -12,11 +12,11 @@ echo '<?xml version="1.0" encoding="utf-8"?>';
   <author>
     <name>none</name>
   </author>
-  <atom:generator>DeltaFeed</atom:generator>
+  <generator>DeltaFeed</generator>
   <title><?=$feedDetails['title']?></title>
   <id>deltafeed:feedid<?=$feedDetails['id']?></id>
   <updated><?=date(DateTime::ATOM, $feedData[0]['time'])?></updated>
- 
+
 <?php
 foreach($feedData as $data) {
 ?>
