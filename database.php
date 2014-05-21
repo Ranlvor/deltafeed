@@ -58,7 +58,7 @@ class DeltafeedDatabase {
                                   FROM          request
                                       LEFT JOIN data ON request.dataid == data.id
 
-                                  WHERE feedid = 1
+                                  WHERE feedid = :feedid
 
                                   ORDER BY request.time DESC
                                   LIMIT 2');
