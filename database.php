@@ -137,6 +137,25 @@ class DeltafeedDatabase {
 
     return $resultArray['count'] > 0;
   }
+
+  function getRegex($feedid) {
+    $query = $this->sql->prepare('SELECT search,replace FROM regex
+                                  WHERE feedid = :id
+                                  ORDER BY ordernumber ASC');
+    $query->bindParam(':id', $feedid, SQLITE3_INTEGER);
+
+    $result = $query->execute();
+    $returnArray = array();
+    $returnArray['search']  = array();
+    $returnArray['replace'] = array();
+    while($resultArray = $result->fetchArray(SQLITE3_ASSOC)) {
+       $returnArray['search'][]  = $resultArray['search'];
+       $returnArray['replace'][] = $resultArray['replace'];
+    }
+    $result->finalize();
+    $query->close();
+    return $returnArray;
+  }
 }
 
 global $db;

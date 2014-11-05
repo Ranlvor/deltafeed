@@ -21,6 +21,13 @@ CREATE TABLE "result" (
     "time" INTEGER,
     "delta" TEXT
 );
+CREATE TABLE "regex" (
+    "feedid" INTEGER,
+    "ordernumber" INTEGER,
+    "search" TEXT,
+    "replace" TEXT,
+    PRIMARY KEY(feedid, ordernumber)
+);
 CREATE INDEX "resultFeedTime" on result (feedid ASC, time ASC);
 CREATE INDEX "requestFeedTime" on request (feedid ASC, time ASC);
 CREATE UNIQUE INDEX "dataunique" on data (data ASC);
